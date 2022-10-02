@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebassapp/main_screen.dart';
 import 'package:firebassapp/singup.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   TextEditingController usernamecontroller = TextEditingController();
   TextEditingController passwordcontroller = TextEditingController();
- 
+
+
+   FirebaseAuth auth = FirebaseAuth.instance;
+
+    signUp(email, password) async {
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+
+    }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                       MaterialPageRoute(builder: (context) => const SignUp()),
                     );
                   },
-                  child: const Text("Sign in!")),
+                  child: const Text("Not yet a member? Sign up!")),
             ),
           ]),
         ),

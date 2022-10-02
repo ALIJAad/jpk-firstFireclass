@@ -1,6 +1,8 @@
 // ignore_for_file: avoid_print
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebassapp/login.dart';
+import 'package:firebassapp/main_screen.dart';
 import 'package:flutter/material.dart';
 
 class SignUp extends StatefulWidget {
@@ -15,9 +17,11 @@ class _SignUpState extends State<SignUp> {
   TextEditingController passwordcontroller = TextEditingController();
   var repasswordcontroller = TextEditingController();
 
+  FirebaseAuth auth = FirebaseAuth.instance;
+
   newaccount() async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await auth.createUserWithEmailAndPassword(
           email: usernamecontroller.text, password: passwordcontroller.text);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -84,8 +88,21 @@ class _SignUpState extends State<SignUp> {
                   TextButton(
                     onPressed: () {
                       newaccount();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ShoppingPage(),
+                        ),
+                      );
                     },
                     child: const Text("Register!"),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => HomePage()));
+                    },
+                    child: const Text("Already have an account?!"),
                   ),
                 ],
               ),
